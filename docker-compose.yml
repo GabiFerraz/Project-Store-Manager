@@ -41,7 +41,7 @@ services:
   # Serviço que irá rodar o banco de dados
   db:
     container_name: store_manager_db
-    image: mysql:5.7
+    image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
