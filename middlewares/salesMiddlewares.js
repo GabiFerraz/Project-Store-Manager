@@ -5,6 +5,7 @@ const salesValidate = (req, _res, next) => {
 
   data.forEach(({ productId, quantity }) => {
     const { error } = quantityProducts.validate({ quantity });
+    
     if (productId === undefined) {
       return next({ status: 400, message: '"productId" is required' });
     }

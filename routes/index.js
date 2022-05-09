@@ -14,7 +14,8 @@ router.get('/sales', salesController.getAll);
 router.get('/sales/:id', salesController.getById);
 
 router.post('/products',
-prodMiddlewares.nameProductValidate, prodMiddlewares.quantityProductsValidate);
+prodMiddlewares.nameProductValidate, prodMiddlewares.quantityProductsValidate,
+productsController.createProduct);
 
 router.post('/sales', salesMiddlewares.salesValidate);
 
