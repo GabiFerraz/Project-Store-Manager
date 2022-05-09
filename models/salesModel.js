@@ -32,7 +32,6 @@ const getById = async (productId) => {
   WHERE id = ?`;
 
   const [sale] = await connection.execute(query, [productId]);
-  // console.log(sale);
 
   return sale.map(serializeId);
 };

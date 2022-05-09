@@ -48,6 +48,7 @@ services:
       # Garanta que não haverá conflitos de porta com um banco que esteja
       # rodando localmente
       - 3306:3306
+    command: mysqld --default-authentication-plugin=mysql_native_password
 
 # Lista de redes que os containeres irão utilizar
 networks:

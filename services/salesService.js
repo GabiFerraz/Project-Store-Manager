@@ -8,7 +8,6 @@ const getAll = async () => {
 
 const getById = async (productId) => {
   const sale = await salesModel.getById(productId);
-  // console.log(sale);
 
   return sale;
 };
