@@ -47,10 +47,19 @@ const updateProduct = async (id, name, quantity) => {
   // update não tem o retorno que eu quero, então passo o objeto no retorno para não dar erro
 };
 
+const deleteProduct = async (id) => {
+  const query = 'DELETE FROM StoreManager.products WHERE id = ?';
+
+  await connection.execute(query, [id]);
+
+  // não terá retorno, já que não é pra ter nada no body.
+};
+
 module.exports = {
   getAll,
   getById,
   getByName,
   createProduct,
   updateProduct,
+  deleteProduct,
 };

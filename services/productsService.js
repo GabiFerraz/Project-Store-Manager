@@ -36,9 +36,18 @@ const updateProduct = async (id, name, quantity) => {
   return product;
 };
 
+const deleteProduct = async (id) => {
+  await getById(id);
+
+  await productsModel.deleteProduct(id);
+
+  // não terá retorno, já que não é pra ter nada no body.
+};
+
 module.exports = {
   getAll,
   getById,
   createProduct,
   updateProduct,
+  deleteProduct,
 };
