@@ -9,6 +9,10 @@ const getAll = async () => {
 const getById = async (productId) => {
   const sale = await salesModel.getById(productId);
 
+  const erro = { status: 404, message: 'Sale not found' };
+
+  if (sale.length === 0) throw erro;
+
   return sale;
 };
 

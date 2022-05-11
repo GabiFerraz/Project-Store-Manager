@@ -71,30 +71,6 @@ describe('Chamada do controller getAll', () => {
 });
 
 describe('Chamada do controller getById', () => {
-  describe('Quando o retorno do produto der errado', () => {
-
-    const request = {};
-    const response = {};
-    let next = () => {};
-  
-    before(() => {
-      request.params = { id: 1 };
-      next = sinon.stub(); // estou dizendo que o meu next é uma função mocada
-      
-      sinon.stub(productsServices, 'getById').resolves(undefined);
-    });
-  
-    after(() => {
-      productsServices.getById.restore();
-    });
-
-    it('não é possível retornar um produto que não existe', async () => {
-      await productsController.getById(request, response, next);
-
-      expect(next.calledWith({ status: 404, message: 'Product not found' })).to.be.equal(true);
-    });
-  });
-
   describe('Quando o retorno do produto der certo', () => {
 
     const request = {};

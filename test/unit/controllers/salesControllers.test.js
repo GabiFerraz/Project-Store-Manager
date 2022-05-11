@@ -74,33 +74,6 @@ describe('Chama o controller getAll', () => {
 });
 
 describe('Chama o controller getById', () => {
-  describe('Quando o retorno da venda dá errado', () => {
-
-    const request = {};
-    const response = [];
-    let next = () => {};
-  
-    before(() => {
-      request.params = { id: 1 };
-      next = sinon.stub(); // estou dizendo que o meu next é uma função mocada
-      
-      response.status = sinon.stub().returns(response);
-      response.json = sinon.stub().returns();
-
-      sinon.stub(salesService, 'getById').resolves([]);
-    });
-  
-    after(() => {
-      salesService.getById.restore();
-    });
-
-    it('não é possível listar uma determinada venda', async () => {
-      await salesController.getById(request, response, next);
-
-      expect(next.calledWith({ status: 404, message: 'Sale not found' })).to.be.equal(true);
-    });
-  });
-
   describe('Quando o retorno da venda dá certo', () => {
 
     const request = {};

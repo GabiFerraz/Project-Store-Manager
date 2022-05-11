@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const salesModel = require('../../../models/salesModel');
 const salesService = require('../../../services/salesService');
 
-describe('Busca todos os produtos no BD, getAll-products-service', () => {
+describe('Busca todas as vendas no BD, getAll-sales-service', () => {
   describe('quando não existe nenhuma venda', () => {
 
     const resultExecute = [];
@@ -30,7 +30,7 @@ describe('Busca todos os produtos no BD, getAll-products-service', () => {
     });
   });
 
-  describe('quando existem produtos registrados no BD', () => {
+  describe('quando existem vendas registradas no BD', () => {
 
     const resultExecute = [
       {
@@ -81,49 +81,80 @@ describe('Busca todos os produtos no BD, getAll-products-service', () => {
   });
 });
 
-describe('Busca os produtos por id no BD, getById-products-service', () => {
+describe('Busca as vendas por id no BD, getById-sales-service', () => {
+  describe('Quando o retorno da venda dá errado', () => {
 
-  const salesIdMock = [
-    {
+    const saleMock = {
       date: '2022-05-10 16:03:40',
       productId: 1,
       quantity: 5
-    }
-  ]
+    };
 
-  before(() => {
-    sinon.stub(salesModel, 'getById').resolves(salesIdMock);
+    before(() => {
+      const productIdExample = 2;
+
+      sinon.stub(salesModel, 'getById').resolves(productIdExample);
+    });
+  
+    after(() => {
+      salesModel.getById.restore();
+    });
+
+    it('retorna um erro', async () => {
+      try {
+        await salesService.getById(saleMock);
+        
+      } catch (error) {
+        expect(error.status).to.be.equal(404);
+        expect(error.message).to.be.equal('Sale not found');
+      }
+    });
   });
 
-  after(() => {
-    salesModel.getById.restore();
-  });
 
-  it('retorna um array', async () => {
-    const result = await salesService.getById();
-
-    expect(result).to.be.an('array');
-  });
-
-  it('o array não está vazio', async () => {
-    const result = await salesService.getById();
-
-    expect(result).to.be.not.empty;
-  });
-
-  it('o array possui objetos', async () => {
-    const [result] = await salesService.getById();
-
-    expect(result).to.be.an('object');
-  });
-
-  it('o objeto contêm os atributos date, productId, quantity', async () => {
-    const [result] = await salesService.getById();
-
-    expect(result).to.be.includes.all.keys(
-      'date',
-      'productId',
-      'quantity'
-    );
+  describe('Quando o retorno da venda dá certo', () => {
+    const salesIdMock = [
+      {
+        date: '2022-05-10 16:03:40',
+        productId: 1,
+        quantity: 5
+      }
+    ]
+  
+    before(() => {
+      sinon.stub(salesModel, 'getById').resolves(salesIdMock);
+    });
+  
+    after(() => {
+      salesModel.getById.restore();
+    });
+  
+    it('retorna um array', async () => {
+      const result = await salesService.getById();
+  
+      expect(result).to.be.an('array');
+    });
+  
+    it('o array não está vazio', async () => {
+      const result = await salesService.getById();
+  
+      expect(result).to.be.not.empty;
+    });
+  
+    it('o array possui objetos', async () => {
+      const [result] = await salesService.getById();
+  
+      expect(result).to.be.an('object');
+    });
+  
+    it('o objeto contêm os atributos date, productId, quantity', async () => {
+      const [result] = await salesService.getById();
+  
+      expect(result).to.be.includes.all.keys(
+        'date',
+        'productId',
+        'quantity'
+      );
+    });
   });
 });

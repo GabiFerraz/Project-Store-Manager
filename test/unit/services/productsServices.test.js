@@ -81,36 +81,67 @@ describe('Busca todos os produtos no BD, getAll-products-service', () => {
 });
 
 describe('Busca os produtos por id no BD, getById-products-service', () => {
+  describe('Quando o retorno do produto der errado', () => {
 
-  const productIdMock = 
-  {
-    id: 1,
-    name: 'Martelo do Thor',
-    quantity: 10,
-  }
+    const productMock = {
+      id: 1,
+      name: 'Headset',
+      quantity: 5,
+    };
+  
+    before(() => {
+      const idExample = 2;
+            
+      sinon.stub(productsModel, 'getById').resolves(idExample);
+    });
+  
+    after(() => {
+      productsModel.getById.restore();
+    });
 
-  before(() => {
-    sinon.stub(productsModel, 'getById').resolves(productIdMock);
+    it('retorna um erro', async () => {
+      try {
+        await productsServices.getById(productMock);
+        
+      } catch (error) {
+        expect(error.status).to.be.equal(404);
+        expect(error.message).to.be.equal('Product not found');
+      }
+    });
   });
 
-  after(() => {
-    productsModel.getById.restore();
-  });
+  describe('Quando o retorno do produto dá certo', () => {
 
-  it('retorna um objeto', async () => {
-    const result = await productsServices.getById();
-
-    expect(result).to.be.an('object');
-  });
-
-  it('o objeto contêm os atributos id, name, quantity', async () => {
-    const result = await productsServices.getById();
-
-    expect(result).to.be.includes.all.keys(
-      'id',
-      'name',
-      'quantity'
-    );
+    const productIdMock = 
+    {
+      id: 1,
+      name: 'Martelo do Thor',
+      quantity: 10,
+    }
+  
+    before(() => {
+      sinon.stub(productsModel, 'getById').resolves(productIdMock);
+    });
+  
+    after(() => {
+      productsModel.getById.restore();
+    });
+  
+    it('retorna um objeto', async () => {
+      const result = await productsServices.getById();
+  
+      expect(result).to.be.an('object');
+    });
+  
+    it('o objeto contêm os atributos id, name, quantity', async () => {
+      const result = await productsServices.getById();
+  
+      expect(result).to.be.includes.all.keys(
+        'id',
+        'name',
+        'quantity'
+      );
+    });
   });
 });
 

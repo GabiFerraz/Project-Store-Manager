@@ -6,7 +6,7 @@ const getAll = async (_req, res, next) => {
   
     return res.status(200).json(products);
   } catch (error) {
-    return next(error);
+    next(error);
   }
 };
 
@@ -16,13 +16,9 @@ const getById = async (req, res, next) => {
   
     const product = await productsService.getById(id);
   
-    if (product === undefined) {
-      return next({ status: 404, message: 'Product not found' });
-    }
-  
     return res.status(200).json(product);
   } catch (error) {
-    return next(error);
+    next(error);
   }
 };
 
@@ -34,7 +30,7 @@ const createProduct = async (req, res, next) => {
   
     return res.status(201).json(newProduct);
   } catch (error) {
-    return next(error);
+    next(error);
   }
 };
 
