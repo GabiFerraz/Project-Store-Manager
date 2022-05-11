@@ -17,7 +17,7 @@ router.post('/products',
 prodMiddlewares.nameProductValidate, prodMiddlewares.quantityProductsValidate,
 productsController.createProduct);
 
-router.post('/sales', salesMiddlewares.salesValidate);
+router.post('/sales', salesMiddlewares.salesValidate, salesController.createSale);
 
 router.put('/products/:id',
 prodMiddlewares.nameProductValidate, prodMiddlewares.quantityProductsValidate,
