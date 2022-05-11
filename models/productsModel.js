@@ -38,9 +38,14 @@ const createProduct = async (name, quantity) => {
   return product;
 };
 
+// const updateProduct = async () => {
+//   const query = 'UPDATE StoreManager.products';
+// };
+
 module.exports = {
   getAll,
   getById,
   getByName,
   createProduct,
+  // updateProduct,
 };
