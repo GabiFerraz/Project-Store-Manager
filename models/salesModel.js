@@ -11,14 +11,14 @@ const getAll = async () => {
   return sales;
 };
 
-const getById = async (productId) => {
+const getById = async (saleId) => {
   const query = `SELECT sa.date, sp.product_id, sp.quantity
   FROM StoreManager.sales AS sa
   INNER JOIN StoreManager.sales_products AS sp
   ON sa.id = sp.sale_id
   WHERE id = ?`;
 
-  const [sale] = await connection.execute(query, [productId]);
+  const [sale] = await connection.execute(query, [saleId]);
 
   return sale;
 };

@@ -82,34 +82,27 @@ describe('Busca todas as vendas no BD, getAll-sales-service', () => {
 });
 
 describe('Busca as vendas por id no BD, getById-sales-service', () => {
-  // describe('Quando o retorno da venda dá errado', () => {
+  describe('Quando o retorno da venda dá errado', () => {
 
-  //   const saleMock = {
-  //     date: '2022-05-10 16:03:40',
-  //     productId: 1,
-  //     quantity: 5
-  //   };
-
-  //   beforeEach(() => {
-  //     const productIdExample = 2;
-
-  //     sinon.stub(salesModel, 'getById').resolves(productIdExample);
-  //   });
+    
+    beforeEach(() => {
+      sinon.stub(salesModel, 'getById').resolves([]);
+    });
   
-  //   afterEach(() => {
-  //     salesModel.getById.restore();
-  //   });
+    afterEach(() => {
+      salesModel.getById.restore();
+    });
 
-  //   it('retorna um erro', async () => {
-  //     try {
-  //       await salesService.getById(saleMock);
+    it('retorna um erro', async () => {
+      try {
+        await salesService.getById(1);
         
-  //     } catch (error) {
-  //       expect(error.status).to.be.equal(404);
-  //       expect(error.message).to.be.equal('Sale not found');
-  //     }
-  //   });
-  // });
+      } catch (error) {
+        expect(error.status).to.be.equal(404);
+        expect(error.message).to.be.equal('Sale not found');
+      }
+    });
+  });
 
   describe('Quando o retorno da venda dá certo', () => {
     const salesIdMock = [

@@ -19,8 +19,8 @@ const serializeId = (data) => ({
   quantity: data.quantity,
 });
 
-const getById = async (productId) => {
-  const sale = await salesModel.getById(productId);
+const getById = async (saleId) => {
+  const sale = await salesModel.getById(saleId);
 
   const erro = { status: 404, message: 'Sale not found' };
 
