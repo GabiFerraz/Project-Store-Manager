@@ -28,8 +28,17 @@ const createProduct = async (name, quantity) => {
   return registeredProduct;
 };
 
+const updateProduct = async (id, name, quantity) => {
+  await getById(id);
+
+  const product = await productsModel.updateProduct(id, name, quantity);
+
+  return product;
+};
+
 module.exports = {
   getAll,
   getById,
   createProduct,
+  updateProduct,
 };

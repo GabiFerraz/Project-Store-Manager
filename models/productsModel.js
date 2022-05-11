@@ -38,14 +38,19 @@ const createProduct = async (name, quantity) => {
   return product;
 };
 
-// const updateProduct = async () => {
-//   const query = 'UPDATE StoreManager.products';
-// };
+const updateProduct = async (id, name, quantity) => {
+  const query = 'UPDATE StoreManager.products SET name = ?, quantity = ? WHERE id = ?';
+
+  await connection.execute(query, [name, quantity, id]);
+
+  return { id, name, quantity };
+  // update não tem o retorno que eu quero, então passo o objeto no retorno para não dar erro
+};
 
 module.exports = {
   getAll,
   getById,
   getByName,
   createProduct,
-  // updateProduct,
+  updateProduct,
 };

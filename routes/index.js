@@ -20,7 +20,8 @@ productsController.createProduct);
 router.post('/sales', salesMiddlewares.salesValidate);
 
 router.put('/products/:id',
-prodMiddlewares.nameProductValidate, prodMiddlewares.quantityProductsValidate);
+prodMiddlewares.nameProductValidate, prodMiddlewares.quantityProductsValidate,
+productsController.updateProduct);
 
 router.put('/sales/:id', salesMiddlewares.salesValidate);
 
