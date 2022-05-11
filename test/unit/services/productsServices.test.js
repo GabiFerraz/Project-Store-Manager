@@ -9,12 +9,12 @@ describe('Busca todos os produtos no BD, getAll-products-service', () => {
 
     const resultExecute = [];
 
-    before(() => {
+    beforeEach(() => {
       sinon.stub(productsModel, 'getAll')
         .resolves(resultExecute);
     });
 
-    after(() => {
+    afterEach(() => {
       productsModel.getAll.restore();
     });
 
@@ -41,12 +41,12 @@ describe('Busca todos os produtos no BD, getAll-products-service', () => {
       }
     ]
 
-    before(() => {
+    beforeEach(() => {
       sinon.stub(productsModel, 'getAll')
         .resolves(resultExecute);
     });
 
-    after(() => {
+    afterEach(() => {
       productsModel.getAll.restore();
     });
 
@@ -89,13 +89,13 @@ describe('Busca os produtos por id no BD, getById-products-service', () => {
       quantity: 5,
     };
   
-    before(() => {
+    beforeEach(() => {
       const idExample = 2;
             
       sinon.stub(productsModel, 'getById').resolves(idExample);
     });
   
-    after(() => {
+    afterEach(() => {
       productsModel.getById.restore();
     });
 
@@ -119,11 +119,11 @@ describe('Busca os produtos por id no BD, getById-products-service', () => {
       quantity: 10,
     }
   
-    before(() => {
+    beforeEach(() => {
       sinon.stub(productsModel, 'getById').resolves(productIdMock);
     });
   
-    after(() => {
+    afterEach(() => {
       productsModel.getById.restore();
     });
   
@@ -153,13 +153,13 @@ describe('Cria um novo produto no BD, createProduct-service', () => {
       quantity: 5,
     };
 
-    before(() => {
+    beforeEach(() => {
       const nameExample = 'Headset';
 
       sinon.stub(productsModel, 'getByName').resolves({ name: nameExample });
     });
 
-    after(() => {
+    afterEach(() => {
       productsModel.getByName.restore();
     })
 
@@ -181,14 +181,14 @@ describe('Cria um novo produto no BD, createProduct-service', () => {
       quantity: 5,
     };
 
-    before(() => {
+    beforeEach(() => {
       const idExample = 1;
 
       sinon.stub(productsModel, 'getByName').resolves();
       sinon.stub(productsModel, 'createProduct').resolves({ id: idExample, ...newProductMock });
     });
 
-    after(() => {
+    afterEach(() => {
       productsModel.getByName.restore();
       productsModel.createProduct.restore();
     })

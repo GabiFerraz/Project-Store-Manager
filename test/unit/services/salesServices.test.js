@@ -9,11 +9,11 @@ describe('Busca todas as vendas no BD, getAll-sales-service', () => {
 
     const resultExecute = [];
 
-    before(() => {
+    beforeEach(() => {
       sinon.stub(salesModel, 'getAll').resolves(resultExecute);
     });
 
-    after(() => {
+    afterEach(() => {
       salesModel.getAll.restore();
     });
 
@@ -41,11 +41,11 @@ describe('Busca todas as vendas no BD, getAll-sales-service', () => {
       }
     ]
 
-    before(() => {
+    beforeEach(() => {
       sinon.stub(salesModel, 'getAll').resolves(resultExecute);
     });
 
-    after(() => {
+    afterEach(() => {
       salesModel.getAll.restore();
     });
 
@@ -90,13 +90,13 @@ describe('Busca as vendas por id no BD, getById-sales-service', () => {
       quantity: 5
     };
 
-    before(() => {
+    beforeEach(() => {
       const productIdExample = 2;
 
       sinon.stub(salesModel, 'getById').resolves(productIdExample);
     });
   
-    after(() => {
+    afterEach(() => {
       salesModel.getById.restore();
     });
 
@@ -121,11 +121,11 @@ describe('Busca as vendas por id no BD, getById-sales-service', () => {
       }
     ]
   
-    before(() => {
+    beforeEach(() => {
       sinon.stub(salesModel, 'getById').resolves(salesIdMock);
     });
   
-    after(() => {
+    afterEach(() => {
       salesModel.getById.restore();
     });
   

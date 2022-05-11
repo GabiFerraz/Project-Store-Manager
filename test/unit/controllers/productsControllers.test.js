@@ -10,14 +10,14 @@ describe('Chamada do controller getAll', () => {
     const response = [];
     const next = () => {};
 
-    before(() => {
+    beforeEach(() => {
       response.status = sinon.stub().returns(response);
       response.json = sinon.stub().returns();
 
       sinon.stub(productsServices, 'getAll').resolves([]);
     });
     
-    after(() => {
+    afterEach(() => {
       productsServices.getAll.restore();
     });
 
@@ -45,14 +45,14 @@ describe('Chamada do controller getAll', () => {
       quantity: 10
     }
 
-    before(() => {
+    beforeEach(() => {
       response.status = sinon.stub().returns(response);
       response.json = sinon.stub().returns();
 
       sinon.stub(productsServices, 'getAll').resolves(productsMock);
     });
     
-    after(() => {
+    afterEach(() => {
       productsServices.getAll.restore();
     });
 
@@ -84,7 +84,7 @@ describe('Chamada do controller getById', () => {
       quantity: 10,
     }
   
-    before(() => {
+    beforeEach(() => {
       request.params = { id: 1 };
   
       response.status = sinon.stub().returns(response);
@@ -93,7 +93,7 @@ describe('Chamada do controller getById', () => {
       sinon.stub(productsServices, 'getById').resolves(productIdMock);
     });
   
-    after(() => {
+    afterEach(() => {
       productsServices.getById.restore();
     });
   
@@ -123,7 +123,7 @@ describe('Chamada do controller createProduct', () => {
       quantity: 5,
     };
   
-    before(() => {
+    beforeEach(() => {
       request.body = { name: 'Headset', quantity: 5 };
 
       response.status = sinon.stub().returns(response);
@@ -134,7 +134,7 @@ describe('Chamada do controller createProduct', () => {
       sinon.stub(productsServices, 'createProduct').resolves(newProductMock);
     });
   
-    after(() => {
+    afterEach(() => {
       productsServices.createProduct.restore();
     });
 

@@ -9,12 +9,12 @@ describe('Busca todos os produtos no BD, getAll-products-model', () => {
 
     const resultExecute = [[]];
 
-    before(() => {
+    beforeEach(() => {
       sinon.stub(connection, 'execute')
         .resolves(resultExecute);
     });
 
-    after(() => {
+    afterEach(() => {
       connection.execute.restore();
     });
 
@@ -41,12 +41,12 @@ describe('Busca todos os produtos no BD, getAll-products-model', () => {
       }
     ]
 
-    before(() => {
+    beforeEach(() => {
       sinon.stub(connection, 'execute')
         .resolves([resultExecute]);
     });
 
-    after(() => {
+    afterEach(() => {
       connection.execute.restore();
     });
 
@@ -90,11 +90,11 @@ describe('Busca os produtos por id no BD, getById-products-model', () => {
     }
   ]]
 
-  before(() => {
+  beforeEach(() => {
     sinon.stub(connection, 'execute').resolves(productIdMock);
   });
 
-  after(() => {
+  afterEach(() => {
     connection.execute.restore();
   });
 
@@ -122,11 +122,11 @@ describe('Busca todos os nomes dos produtos no BD, getByName-products-model', ()
     }
   ]]
 
-  before(() => {
+  beforeEach(() => {
     sinon.stub(connection, 'execute').resolves(productIdMock);
   });
 
-  after(() => {
+  afterEach(() => {
     connection.execute.restore();
   });
 
@@ -151,13 +151,13 @@ describe('Cria um novo produto no BD, createProduct-model', () => {
       quantity: 5,
     };
 
-    before(() => {
+    beforeEach(() => {
       const execute = [{ insertId: 3 }]
 
       sinon.stub(connection, 'execute').resolves(execute);
     });
 
-    after(() => {
+    afterEach(() => {
       connection.execute.restore();
     })
 

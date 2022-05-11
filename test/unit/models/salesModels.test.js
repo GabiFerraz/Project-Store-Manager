@@ -9,11 +9,11 @@ describe('Busca todas as vendas no BD, getAll-sales-model', () => {
 
     const resultExecute = [[]];
 
-    before(() => {
+    beforeEach(() => {
       sinon.stub(connection, 'execute').resolves(resultExecute);
     });
 
-    after(() => {
+    afterEach(() => {
       connection.execute.restore();
     });
 
@@ -41,11 +41,11 @@ describe('Busca todas as vendas no BD, getAll-sales-model', () => {
       }
     ]]
 
-    before(() => {
+    beforeEach(() => {
       sinon.stub(connection, 'execute').resolves(resultExecute);
     });
 
-    after(() => {
+    afterEach(() => {
       connection.execute.restore();
     });
 
@@ -91,11 +91,11 @@ describe('Busca as vendas por id no BD, getById-sales-model', () => {
     }
   ]]
 
-  before(() => {
+  beforeEach(() => {
     sinon.stub(connection, 'execute').resolves(saleIdMock);
   });
 
-  after(() => {
+  afterEach(() => {
     connection.execute.restore();
   });
 

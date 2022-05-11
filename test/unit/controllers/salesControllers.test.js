@@ -10,14 +10,14 @@ describe('Chama o controller getAll', () => {
     const request = {};
     const response = [];
 
-    before(() => {
+    beforeEach(() => {
       response.status = sinon.stub().returns(response);
       response.json = sinon.stub().returns();
 
       sinon.stub(salesService, 'getAll').resolves([]);
     });
 
-    after(() => {
+    afterEach(() => {
       salesService.getAll.restore();
     });
 
@@ -48,14 +48,14 @@ describe('Chama o controller getAll', () => {
       }
     ]]
 
-    before(() => {
+    beforeEach(() => {
       response.status = sinon.stub().returns(response);
       response.json = sinon.stub().returns();
 
       sinon.stub(salesService, 'getAll').resolves(resultExecute);
     });
 
-    after(() => {
+    afterEach(() => {
       salesService.getAll.restore();
     });
 
@@ -88,7 +88,7 @@ describe('Chama o controller getById', () => {
       }
     ]]
   
-    before(() => {
+    beforeEach(() => {
       request.params = { id: 1 };
   
       response.status = sinon.stub().returns(response);
@@ -97,7 +97,7 @@ describe('Chama o controller getById', () => {
       sinon.stub(salesService, 'getById').resolves(salesIdMock);
     });
   
-    after(() => {
+    afterEach(() => {
       salesService.getById.restore();
     });
   
