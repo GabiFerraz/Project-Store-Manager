@@ -32,10 +32,10 @@ const getById = async (saleId) => {
 const createSale = async (data) => {
   const saleId = await salesModel.createSale(data);
 
-  const newSalePromisse = data.map(({ productId, quantity }) =>
+  const newSalePromise = data.map(({ productId, quantity }) =>
     salesModel.createSaleProducts(saleId, productId, quantity));
 
-  await Promise.all(newSalePromisse);
+  await Promise.all(newSalePromise);
 
   const saleRegister = {
     id: saleId,
@@ -45,8 +45,23 @@ const createSale = async (data) => {
   return saleRegister;
 };
 
+const updateSale = async (saleId, data) => {
+  const updateSalePromise = data.map(({ productId, quantity }) =>
+    salesModel.updateSale(saleId, productId, quantity));
+
+  await Promise.all(updateSalePromise);
+
+  const saleUpdateRegister = {
+    saleId,
+    itemUpdated: data,
+  };
+
+  return saleUpdateRegister;
+};
+
 module.exports = {
   getAll,
   getById,
   createSale,
+  updateSale,
 };

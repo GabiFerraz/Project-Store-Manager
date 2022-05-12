@@ -23,7 +23,7 @@ router.put('/products/:id',
 prodMiddlewares.nameProductValidate, prodMiddlewares.quantityProductsValidate,
 productsController.updateProduct);
 
-router.put('/sales/:id', salesMiddlewares.salesValidate);
+router.put('/sales/:id', salesMiddlewares.salesValidate, salesController.updateSale);
 
 router.delete('/products/:id', productsController.deleteProduct);
 
