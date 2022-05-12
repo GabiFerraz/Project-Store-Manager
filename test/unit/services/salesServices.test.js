@@ -122,25 +122,25 @@ describe('Busca as vendas por id no BD, getById-sales-service', () => {
     });
   
     it('retorna um array', async () => {
-      const result = await salesService.getById();
+      const result = await salesService.getById(1);
   
       expect(result).to.be.an('array');
     });
   
     it('o array não está vazio', async () => {
-      const result = await salesService.getById();
+      const result = await salesService.getById(1);
   
       expect(result).to.be.not.empty;
     });
   
     it('o array possui objetos', async () => {
-      const [result] = await salesService.getById();
+      const [result] = await salesService.getById(1);
   
       expect(result).to.be.an('object');
     });
   
     it('o objeto contêm os atributos date, productId, quantity', async () => {
-      const [result] = await salesService.getById();
+      const [result] = await salesService.getById(1);
   
       expect(result).to.be.includes.all.keys(
         'date',
