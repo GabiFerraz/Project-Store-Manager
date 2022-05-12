@@ -47,9 +47,22 @@ const updateSale = async (req, res, next) => {
   }
 };
 
+const deleteSale = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    await salesService.deleteSale(id);
+
+    return res.status(204).json(); // já que não é pra ter nada no body, o json vai vazio.
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAll,
   getById,
   createSale,
   updateSale,
+  deleteSale,
 };

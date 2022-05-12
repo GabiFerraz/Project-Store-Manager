@@ -49,10 +49,19 @@ const updateSale = async (saleId, productId, quantity) => {
   return sale;
 };
 
+const deleteSale = async (id) => {
+  const query = 'DELETE FROM StoreManager.sales WHERE id = ?';
+
+  await connection.execute(query, [id]);
+
+  // não terá retorno, já que não é pra ter nada no body.
+};
+
 module.exports = {
   getAll,
   getById,
   createSale,
   createSaleProducts,
   updateSale,
+  deleteSale,
 };
