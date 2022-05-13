@@ -18,15 +18,10 @@ describe('Busca todos os produtos no BD, getAll-products-service', () => {
       productsModel.getAll.restore();
     });
 
-    it('retorna um array', async () => {
+    it('retorna um array que está vazio', async () => {
       const result = await productsServices.getAll();
 
       expect(result).to.be.an('array');
-    });
-
-    it('o array está vazio', async () => {
-      const result = await productsServices.getAll();
-
       expect(result).to.be.empty;
     });
   });
@@ -39,7 +34,7 @@ describe('Busca todos os produtos no BD, getAll-products-service', () => {
         name: 'Martelo do Thor',
         quantity: 10,
       }
-    ]
+    ];
 
     beforeEach(() => {
       sinon.stub(productsModel, 'getAll')
@@ -50,27 +45,17 @@ describe('Busca todos os produtos no BD, getAll-products-service', () => {
       productsModel.getAll.restore();
     });
 
-    it('retorna um array', async () => {
+    it('retorna um array que não está vazio', async () => {
       const result = await productsServices.getAll();
 
       expect(result).to.be.an('array');
-    });
-
-    it('o array não está vazio', async () => {
-      const result = await productsServices.getAll();
-
       expect(result).to.be.not.empty;
     });
 
-    it('o array possui objetos', async () => {
+    it('o array possui objetos com os atributos id, name, quantity', async () => {
       const [result] = await productsServices.getAll();
 
       expect(result).to.be.an('object');
-    });
-
-    it('o objeto que está no array contêm os atributos id, name, quantity', async () => {
-      const [result] = await productsServices.getAll();
-
       expect(result).to.be.includes.all.keys(
         'id',
         'name',
@@ -81,7 +66,7 @@ describe('Busca todos os produtos no BD, getAll-products-service', () => {
 });
 
 describe('Busca os produtos por id no BD, getById-products-service', () => {
-  describe('Quando o retorno do produto der errado', () => {
+  describe('quando o retorno do produto der errado', () => {
 
     const productMock = {
       id: 1,
@@ -110,7 +95,7 @@ describe('Busca os produtos por id no BD, getById-products-service', () => {
     });
   });
 
-  describe('Quando o retorno do produto dá certo', () => {
+  describe('quando o retorno do produto dá certo', () => {
 
     const productIdMock = 
     {
@@ -118,6 +103,8 @@ describe('Busca os produtos por id no BD, getById-products-service', () => {
       name: 'Martelo do Thor',
       quantity: 10,
     }
+
+    const id = 1;
   
     beforeEach(() => {
       sinon.stub(productsModel, 'getById').resolves(productIdMock);
@@ -127,15 +114,10 @@ describe('Busca os produtos por id no BD, getById-products-service', () => {
       productsModel.getById.restore();
     });
   
-    it('retorna um objeto', async () => {
-      const result = await productsServices.getById();
+    it('retorna um objeto com os atributos id, name, quantity', async () => {
+      const result = await productsServices.getById(id);
   
       expect(result).to.be.an('object');
-    });
-  
-    it('o objeto contêm os atributos id, name, quantity', async () => {
-      const result = await productsServices.getById();
-  
       expect(result).to.be.includes.all.keys(
         'id',
         'name',
@@ -146,7 +128,7 @@ describe('Busca os produtos por id no BD, getById-products-service', () => {
 });
 
 describe('Cria um novo produto no BD, createProduct-service', () => {
-  describe('Quando o name já existe', () => {
+  describe('quando o name já existe', () => {
     
     const productMock = {
       name: 'Headset',
@@ -174,7 +156,7 @@ describe('Cria um novo produto no BD, createProduct-service', () => {
     });
   });
 
-  describe('Quando é inserido com sucesso', () => {
+  describe('quando o produto é inserido com sucesso', () => {
 
     const newProductMock = {
       name: 'Headset',
@@ -185,7 +167,8 @@ describe('Cria um novo produto no BD, createProduct-service', () => {
       const idExample = 1;
 
       sinon.stub(productsModel, 'getByName').resolves();
-      sinon.stub(productsModel, 'createProduct').resolves({ id: idExample, ...newProductMock });
+      sinon.stub(productsModel, 'createProduct')
+        .resolves({ id: idExample, ...newProductMock });
     });
 
     afterEach(() => {
@@ -193,18 +176,110 @@ describe('Cria um novo produto no BD, createProduct-service', () => {
       productsModel.createProduct.restore();
     })
 
-    it('retorna um objeto', async () => {
+    it('retorna um objeto que possui o "id" do novo produto inserido', async () => {
       const response = await productsServices
         .createProduct(newProductMock.name, newProductMock.quantity);
 
       expect(response).to.be.an('object');
-    });
-
-    it('o objeto possui o "id" do novo produto inserido', async () => {
-      const response = await productsServices
-        .createProduct(newProductMock.name, newProductMock.quantity);
-
       expect(response).to.have.a.property('id');
     });
   });
 });
+
+describe('Atualiza um produto no BD, updateProduct-service', () => {
+  describe('quando a atualização do produto dá errado', () => {
+    const updateProductMock = {
+      id: 1,
+      name: 'Headset',
+      quantity: 5,
+    };
+
+    const id = 1;
+
+    beforeEach(() => {
+      sinon.stub(productsModel, 'getById').resolves(undefined);
+      sinon.stub(productsModel, 'updateProduct').resolves(updateProductMock);
+    });
+
+    afterEach(() => {
+      productsModel.getById.restore();
+      productsModel.updateProduct.restore();
+    });
+
+    it('quando o id não existe, retorna um erro', async () => {
+      // Devaneios e tentativas de tratar o erro de outra forma, tentar olhar novamente depois:
+      // await assert.throws(async () => {
+      //   await productsServices.updateProduct(updateProductMock.id,
+      //     updateProductMock.name, updateProductMock.quantity);
+      // }, Error, { status: 404, message: 'Product not found' });
+
+      try {
+        await productsServices.updateProduct(id);
+        
+      } catch (error) {
+        expect(error.status).to.be.equal(404);
+        expect(error.message).to.be.equal('Product not found');
+      }
+    });    
+  });
+
+  describe('quando a atualização do produto dá certo', () => {
+    const updateProductMock = {
+      id: 1,
+      name: 'Headset',
+      quantity: 5,
+    };
+
+    beforeEach(() => {
+      sinon.stub(productsModel, 'getById').resolves(1);
+      sinon.stub(productsModel, 'updateProduct').resolves(updateProductMock);
+    });
+
+    afterEach(() => {
+      productsModel.getById.restore();
+      productsModel.updateProduct.restore();
+    });
+
+    it(`retorna um objeto atualizado que possui as chaves id,
+    name e quantity`, async () => {
+      const response = await productsServices.updateProduct(updateProductMock.id,
+        updateProductMock.name, updateProductMock.quantity);
+
+      expect(response).to.be.an('object');
+      expect(response).to.be.includes.all.keys('id', 'name', 'quantity');
+    });
+  });
+});
+
+// Tentativas de testar o delete, voltar para tentar de novo depois:
+// describe('Deleta um produto do BD, deleteProduct-service', () => {
+//   describe('quando o produto é apagado com sucesso', () => {
+
+//     let prodModIdStub;
+//     let prodModUpdateStub;
+
+//     const id = 1;
+
+//     beforeEach(() => {
+      
+//       // prodModIdStub = sinon.stub(productsModel, 'getById');
+//       prodModUpdateStub = sinon.stub(productsModel, 'updateProduct');
+//       // quando eu coloco um .resolves eu espero um retorno e, nesse caso,
+//       // eu não quero um retorno, quero testar só a execução dele.
+//     });
+
+//     afterEach(() => {
+//       // prodModIdStub.restore();
+//       prodModUpdateStub.restore();
+//     });
+
+//     it('não retorna nada', async () => {
+//       await productsServices.deleteProduct(id);
+
+//       // expect(prodModIdStub.calledOnce).to.be.true;
+//       expect(prodModUpdateStub.calledOnce).to.be.true;
+//       // expect(prodModUpdateStub.getCall(0).args)
+//       //   .to.deep.equal(1);
+//     });
+//   });
+// });

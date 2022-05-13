@@ -17,15 +17,10 @@ describe('Busca todas as vendas no BD, getAll-sales-service', () => {
       salesModel.getAll.restore();
     });
 
-    it('retorna um array', async () => {
+    it('retorna um array que está vazio', async () => {
       const result = await salesService.getAll();
 
       expect(result).to.be.an('array');
-    });
-
-    it('o array está vazio', async () => {
-      const result = await salesService.getAll();
-
       expect(result).to.be.empty;
     });
   });
@@ -49,28 +44,18 @@ describe('Busca todas as vendas no BD, getAll-sales-service', () => {
       salesModel.getAll.restore();
     });
 
-    it('retorna um array', async () => {
+    it('retorna um array que não está vazio', async () => {
       const result = await salesService.getAll();
 
       expect(result).to.be.an('array');
-    });
-
-    it('o array não está vazio', async () => {
-      const result = await salesService.getAll();
-
       expect(result).to.be.not.empty;
     });
 
-    it('o array possui objetos', async () => {
+    it(`o array possui objetos com os atributos saleId, date,
+    productId e quantity`, async () => {
       const [result] = await salesService.getAll();
 
       expect(result).to.be.an('object');
-    });
-
-    it(`o objeto que está no array contêm os atributos saleId, date,
-    productId, quantity`, async () => {
-      const [result] = await salesService.getAll();
-
       expect(result).to.be.includes.all.keys(
         'saleId',
         'date',
@@ -83,7 +68,7 @@ describe('Busca todas as vendas no BD, getAll-sales-service', () => {
 
 describe('Busca as vendas por id no BD, getById-sales-service', () => {
   describe('Quando o retorno da venda dá errado', () => {
-
+    const id = 1;
     
     beforeEach(() => {
       sinon.stub(salesModel, 'getById').resolves([]);
@@ -95,7 +80,7 @@ describe('Busca as vendas por id no BD, getById-sales-service', () => {
 
     it('retorna um erro', async () => {
       try {
-        await salesService.getById(1);
+        await salesService.getById(id);
         
       } catch (error) {
         expect(error.status).to.be.equal(404);
@@ -112,6 +97,8 @@ describe('Busca as vendas por id no BD, getById-sales-service', () => {
         quantity: 5
       }
     ]
+
+    const id = 1;
   
     beforeEach(() => {
       sinon.stub(salesModel, 'getById').resolves(salesIdMock);
@@ -121,27 +108,17 @@ describe('Busca as vendas por id no BD, getById-sales-service', () => {
       salesModel.getById.restore();
     });
   
-    it('retorna um array', async () => {
-      const result = await salesService.getById(1);
+    it('retorna um array que não está vazio', async () => {
+      const result = await salesService.getById(id);
   
       expect(result).to.be.an('array');
-    });
-  
-    it('o array não está vazio', async () => {
-      const result = await salesService.getById(1);
-  
       expect(result).to.be.not.empty;
     });
   
-    it('o array possui objetos', async () => {
-      const [result] = await salesService.getById(1);
+    it('o array possui objetos com os atributos date, productId e quantity', async () => {
+      const [result] = await salesService.getById(id);
   
       expect(result).to.be.an('object');
-    });
-  
-    it('o objeto contêm os atributos date, productId, quantity', async () => {
-      const [result] = await salesService.getById(1);
-  
       expect(result).to.be.includes.all.keys(
         'date',
         'productId',
