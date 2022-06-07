@@ -309,3 +309,7 @@ describe('Chamada do controller updateProduct', () => {
 //     });
 //   });
 // });
+
+// A ideia de usar o spy para poder testar o uso do next eu tirei do stackoverflow:
+// https://stackoverflow.com/questions/34516951/express-middleware-testing-mocha-chai
+// https://stackoverflow.com/questions/29800733/verifying-function-call-and-inspecting-arguments-using-sinon-spies

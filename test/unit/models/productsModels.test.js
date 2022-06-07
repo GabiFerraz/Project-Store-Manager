@@ -249,3 +249,7 @@ describe('Deleta um produto do BD, deleteProduct-model', () => {
     });
   });
 });
+
+// A ideia de usar o .getCall e o .args eu retirei da documentação do stubs e de um tutorial
+// https://sinonjs.org/releases/v14/stubs/
+// https://masteringjs.io/tutorials/sinon/stub

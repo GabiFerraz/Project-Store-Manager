@@ -212,6 +212,7 @@ describe('Atualiza um produto no BD, updateProduct-service', () => {
       //   await productsServices.updateProduct(updateProductMock.id,
       //     updateProductMock.name, updateProductMock.quantity);
       // }, Error, { status: 404, message: 'Product not found' });
+      //https://stackoverflow.com/questions/63511399/mocha-assert-asynchronous-function-throws-exception
 
       try {
         await productsServices.updateProduct(id);
